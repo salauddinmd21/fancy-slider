@@ -13,7 +13,7 @@ let sliders = [];
 const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 // show gallery title
 const getImages = (query) => {
-   toggleSpinner(true);
+  displaySpinner(true);
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
@@ -30,7 +30,7 @@ const showImages = (images) => {
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div);
-    toggleSpinner(false);
+    displaySpinner(false);
   })
 }
 document.getElementById('search').addEventListener("keypress",function(event){
@@ -48,7 +48,7 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
-    toggleImage(element,img);
+    togglePhotos(element,img);
   }
 }
 var timer
@@ -130,8 +130,8 @@ sliderBtn.addEventListener('click', function () {
   createSlider()
 })
 // added toggle spinner for as a extra task
-const toggleSpinner = show=>{
-  const spinner = document.getElementById('loading-spinner');
+const displaySpinner = show=>{
+  const spinner = document.getElementById('spinner-area');
    if(show){
       spinner.classList.remove('d-none');
    } else{
@@ -139,7 +139,7 @@ const toggleSpinner = show=>{
    }
 }
 
-const toggleImage = (element,img)=>{
+const togglePhotos = (element,img)=>{
       element.classList.toggle('added');
       const index = sliders.indexOf(img);
       if (index > -1) {
